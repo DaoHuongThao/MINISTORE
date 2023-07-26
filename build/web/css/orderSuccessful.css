@@ -1,0 +1,179 @@
+/* reset CSS */
+* {
+    padding: 0 !important;
+    margin: 0;
+    box-sizing: border-box !important;
+}
+
+.container-fluid {
+    position: relative;
+    width: 100%;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+
+.item .card {
+    cursor: pointer;
+    overflow: hidden !important;
+}
+
+.item-card .card {
+    border-radius: 20px;
+}
+
+.item-list .card {
+    border-radius: 20px;
+    margin: 0 15px;
+}
+
+.card img {
+    width: 200px !important;
+    height: 180px;
+}
+
+.card img:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+.card-body {
+    margin-bottom: 15px;
+}
+
+.card-body a {
+    text-decoration: none;
+    color: #000;
+}
+
+.card-body a:hover {
+    color: #1B9C85;
+}
+
+.bricked-price {
+    text-decoration: line-through;
+    color: rgba(51, 51, 51, 0.8);
+}
+
+.price, .hot-deal-footer h2, .hot-deal-footer ul, u, .best-selling-title {
+    color: #FF0000;
+}
+
+
+.item .btn {
+    background-color: #fff;
+    color: #1B9C85;
+    border: 1px solid #1B9C85;
+    border-radius: 40px;
+}
+
+.item .btn:hover {
+    color: #fff;
+    background-color: #1B9C85;
+    border: 1px solid #1B9C85;
+}
+
+
+
+.best-selling {
+    background-color: #FEFBF6 !important;
+}
+
+.best-selling-title h1 {
+    text-transform: uppercase !important;
+}
+
+.best-selling-title h2{
+    padding-top: 50px !important;
+    padding-bottom: 25px !important;
+    font-style: normal !important;
+}
+.best-selling-title em{
+    padding-top: 50px !important;
+    padding-bottom: 25px !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+}
+
+
+.best-selling-title h5{
+    display: flex;
+    color: #333 !important;
+    margin-top: 0px !important;
+    margin-bottom: 50px !important;
+    font-weight: 500 !important;
+    justify-content: center;
+}
+
+.best-selling-title {
+    border-bottom: 1px solid rgba(0,0,0,0.3) !important;
+    margin-bottom: 70px !important;
+}
+
+.header {
+    background-color: #F6F5DB;
+    padding: 0 30px !important;
+}
+
+.nav ul:first-child {
+    margin-left: -15px;
+}
+
+.nav {
+    width: 15%;
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.nav li a {
+    font-size: 25px;
+    color: #07484A;
+}
+
+.nav li .btn-item {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.nav li a:hover {
+    background-color: transparent !important;
+    color: #1B9C85;
+}
+
+.nav .cart {
+    position: relative;
+}
+
+.nav .badge { 
+    position: absolute;
+    top: 10%;
+    right: 0;
+    background-color: #FF0000;
+}
+
+.navbar-nav .nav-item {
+    margin: 0 10px;
+}
+
+.navbar {
+    padding: 0 !important;
+}
+
+.link {
+    text-decoration: none;
+    color: #1B9C85;
+    font-weight: 700;
+}
+
+.link:hover {
+    color: #007965;
+}
+
+ul.pagination {
+    margin: 0 !important;
+}

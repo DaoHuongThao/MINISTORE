@@ -1,0 +1,276 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 16px !important;
+    background-color: #FEFBF6 !important;
+}
+
+.path {
+    padding: 0 8px !important;
+}
+
+.navbar_path  nav {
+    display: inline-block !important;
+}
+
+.breadcrumb {
+    padding: 0 !important;
+    background-color: transparent !important;
+    margin-left: 60px;
+}
+
+.breadcrumb li a, li::before {
+    color: #1B9C85 !important;
+    text-decoration: none !important;
+}
+
+.breadcrumb .active {
+    font-weight: 700;
+}
+
+.product-detail-img img {
+    border: 2px solid #E4D654;
+    width: 380px;
+    height: 350px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 35px;
+}
+
+.description {
+    font-style: italic;
+    font-size: 15px;
+    margin-bottom: 70px !important;
+
+}
+
+.group-price {
+    font-size: 18px;
+}
+
+.bricked-price {
+    margin-right: 30px;
+    text-decoration: line-through;
+    color: rgba(51, 51, 51, 0.42);}
+
+.price, .related-product .title {
+    color: #FF0000;
+    font-weight: bold;
+}
+
+.group-quantity{
+    display:flex;
+    align-items: center;
+}
+
+.group-quantity input {
+    width: 50px;
+    padding: 10px;
+    text-align: center;
+    color: #1B9C85 !important;
+    background-color: #E4E3E0;
+    border: none;
+    margin: 0 -3px;
+}
+
+.group-quantity i {
+    font-size: 14px;
+    text-align: center;
+    border: none;
+    color: #1B9C85 !important;
+}
+
+.quantity-button {
+    color: #1B9C85;
+    padding: 10px;
+    margin: 0 5px;
+    text-align: center;
+    background-color: #E4E3E0;
+    border: none;
+}
+
+.quantity-button:first-child {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.quantity-button:last-child {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.button {
+    font-size: 16px !important;
+    font-weight: 700;
+    background-color: #1B9C85;
+    color: #fff;
+    border: 1px solid #1B9C85;
+    border-radius: 10px !important;
+    padding: 5px 15px; 
+}
+
+
+.button:hover {
+    color: #1B9C85;
+    background-color: #fff;
+    border: 1px solid #1B9C85;
+}
+
+
+.notification {
+    margin-left: 40px;
+}
+
+.notification p {
+    margin: 0 !important;
+}
+
+.notification span {
+    color: rgb(255, 94, 0);
+    font-weight: 600;
+}
+
+.cart-btn .btn, .item .btn {
+    background-color: #fff;
+    color: #1B9C85;
+    border: 1px solid #1B9C85;
+    border-radius: 40px;
+    margin-top: 20px !important;
+    padding: 10px 20px !important;
+}
+
+.cart-btn .btn:hover, .item .btn:hover {
+    color: #fff;
+    background-color: #1B9C85;
+    border: 1px solid #1B9C85;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.item .card {
+    cursor: pointer;
+    overflow: hidden !important;
+}
+
+.item-list .card {
+    border-radius: 20px;
+    margin: 0 15px;
+}
+
+
+.card img {
+    width: 200px !important;
+    height: 180px;
+}
+
+.card img:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+
+.bricked-price {
+text-decoration: line-through;
+    color: rgba(51, 51, 51, 0.8);
+}
+
+
+.banner-search{
+    margin-top:50px;
+    margin-bottom:50px;
+
+}
+.banner-search input {
+    position: absolute;
+    left: 30%;
+    right: 30%;
+    border-radius: 30px;
+    border: none;
+    padding: 10px 60px !important;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;    
+}
+.banner-search button {
+    position: absolute;
+    left: 60%;
+    right: 25%;    
+}
+
+.banner-search button i {
+    color: #000;
+}
+
+.banner-search button i:hover {
+    color: #45ccb3;
+}
+
+.banner-search input::placeholder {
+    font-style: oblique;
+    font-weight: 300;
+}
+
+
+.noti-key {
+    margin-left:5%;
+    margin-top:3%;
+    margin-bottom:3%;
+    color: rgba(0, 0, 0, 0.75);     
+}
+
+.noti-key strong {
+    color: #000;
+    margin-left: 5px;
+}
+
+.toast-message {
+    font-size: 16px;
+}
+
+
+
+.card-body a{
+    text-decoration: none;
+    color: #000;
+}
+.card-body a:hover {
+    color: #1B9C85;
+    text-decoration: none;
+}
+
+.related-product {
+    margin-top: 100px !important;
+}
+
+
+
+/* Back To Top */
+#btn-back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 30px;
+    background-color: #1B9C85;
+    color: #fff;
+    border: none;
+    width: 40px;
+    height: 40px;
+    display: flex !important;
+    justify-content: center;align-items: center;
+}
+
+
+.cus-info {
+    height: 70%;
+    margin: 20px;
+}
