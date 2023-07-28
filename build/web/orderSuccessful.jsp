@@ -18,7 +18,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="./image/favicon-32x32.png">
-        <title>Order Successful</title>
+        <title>Ministore</title>
         <link rel="stylesheet" href="css/orderSuccessful.css">
 
 
@@ -47,26 +47,27 @@
                 </div>
 
                 <div class="item-list mx-5">
-                    <div class="row row-cols-md-5">
+                    <div class="row ">
                         <c:if test="${ProductDAO.getProducts() != null}">
                             <c:if test="${requestScope.list == null}">
                                 <c:forEach var="product" items="${ProductDAO.getProducts()}" begin="0" end="19">
                                     <div class="col">
                                         <!-- begin item -->
                                         <div class="item mb-4 text-center">
-                                            <div class="card border-0 shadow">
-                                                <img src="${product.imgPath}" class="card-img-top" alt="">
+                                            <div class="card border-0 shadow align-items-center">
+                                                <a href="MainController?action=viewProduct&pid=${product.productID}&cateID=${product.cateID}">
+                                                    <img src="${product.imgPath}" class="card-img-top" alt="">
+                                                </a>
                                                 <div class="card-body">
                                                     <h5 class="card-title mb-3 fw-bold"><a href="MainController?action=viewProduct&pid=${product.productID}&cateID=${product.cateID}">${product.productName}</a></h5>
-                                                    <span class="bricked-price mx-2">${product.price}</span>
-                                                    <span class="price fw-bold mx-2">$1.19</span></br>
-                                                    <a href="#" class="btn btn-primary mt-3 px-3 py-2 fw-bold">Add To Cart</a>
+                                                        <fmt:formatNumber value="${product.price + 0.5}" pattern="#,##0.00" var="formattedNumber" />
+                                                    <span class="price fw-bold mx-2">$${product.price}</span></br>                                                  
+                                                    <a href="MainController?action=addToCart&pid=${product.productID}&cid=${product.cateID}&quantity=1" class="btn btn-primary mt-3 px-3 py-2 fw-bold">Add To Cart</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- end item -->
                                     </div>
-
                                 </c:forEach>
                             </c:if>
                             <c:if test="${requestScope.list != null}">
@@ -74,13 +75,15 @@
                                     <div class="col">
                                         <!-- begin item -->
                                         <div class="item mb-4 text-center">
-                                            <div class="card border-0 shadow">
-                                                <img src="${product.imgPath}" class="card-img-top" alt="">
-                                                <div class="card-body">
+                                            <div class="card border-0 shadow align-items-center">
+                                                <a href="MainController?action=viewProduct&pid=${product.productID}&cateID=${product.cateID}">
+                                                    <img src="${product.imgPath}" class="card-img-top" alt="">
+                                                </a>                                                <div class="card-body">
                                                     <h5 class="card-title mb-3 fw-bold"><a href="MainController?action=viewProduct&pid=${product.productID}&cateID=${product.cateID}">${product.productName}</a></h5>
-                                                    <span class="bricked-price mx-2">${product.price}</span>
-                                                    <span class="price fw-bold mx-2">$1.19</span></br>
-                                                    <a href="#" class="btn btn-primary mt-3 px-3 py-2 fw-bold">Add To Cart</a>
+
+                                                    <fmt:formatNumber value="${product.price + 0.5}" pattern="#,##0.00" var="formattedNumber" />
+                                                    <span class="price fw-bold mx-2">$${product.price}</span></br>
+                                                    <a href="MainController?action=addToCart&pid=${product.productID}&cid=${product.cateID}&quantity=1" class="btn btn-primary mt-3 px-3 py-2 fw-bold">Add To Cart</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,22 +97,7 @@
                     </div>
                 </div>
 
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" style="padding: 8px 14px !important;color: #1B9C85" href="MainController?action=showPage&page=${requestScope.page-1}"><</a>
-                        </li>
-                        <% int totalProduct = ProductDAO.getTotalProduct();
-                            int element = 20;
-                        %>
-                        <%for (int i = 1; i <= (int) Math.ceil(totalProduct / element); i++) {%>
-                        <li class="page-item "><a class="page-link " style="padding:8px 14px !important;color: #1B9C85" href="MainController?action=showPage&page=<%=i%>"><%=i%></a></li>
-                            <% }%>
-                        <li class="page-item">
-                            <a class="page-link" style="padding:8px 14px !important;color: #1B9C85" href="MainController?action=showPage&page=${requestScope.page+1}">></a>
-                        </li>
-                    </ul>
-                </nav>
+                
             </div>
 
         </div>
