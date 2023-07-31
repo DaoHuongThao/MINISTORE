@@ -1,10 +1,9 @@
-package controllers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package controllers;
 
 import dao.OrderDAO;
 import dto.Order;
@@ -24,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Admin
  */
-public class ManageSaleOrdersServlet extends HttpServlet {
+public class ShowPaginatedMyOrdersServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,14 +40,22 @@ public class ManageSaleOrdersServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            User sale = (User) session.getAttribute("sale");
-            ArrayList<Order> list = OrderDAO.getOrderBySaleId(sale.getUserID());
-            int totalSaleOrders = OrderDAO.countSaleOrders(sale.getUserID());
-            if(list != null){
-                request.setAttribute("orderList", list);
-                request.setAttribute("totalSaleOrders", totalSaleOrders);
-                request.getRequestDispatcher("viewSaleOrders.jsp").forward(request, response);
+            User customer = (User) session.getAttribute("customer");
+            int pageNumber = Integer.parseInt(request.getParameter("page"));
+            int ordersPerPage = 8;
+            String status = request.getParameter("status");
+            ArrayList<Order> oList = null;
+            if(status == ""){
+                oList = OrderDAO.getMyOrders(customer.getUserID());
+            }else{
+                oList = OrderDAO.getMyOrdersByStatus(customer.getUserID(), Integer.parseInt(status));
             }
+            ArrayList<Order> opList = OrderDAO.getPaginatedOrders(pageNumber, ordersPerPage, oList);
+            request.setAttribute("ordersList", oList);
+            request.setAttribute("page", pageNumber);
+            request.setAttribute("opList", opList);
+            request.setAttribute("status", status);
+            request.getRequestDispatcher("myOrders.jsp").forward(request, response);
         }
     }
 
@@ -67,7 +74,7 @@ public class ManageSaleOrdersServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ManageSaleOrdersServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ShowPaginatedMyOrdersServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -85,7 +92,7 @@ public class ManageSaleOrdersServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ManageSaleOrdersServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ShowPaginatedMyOrdersServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

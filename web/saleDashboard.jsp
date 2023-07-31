@@ -1,4 +1,4 @@
-
+<%@page import="dao.OrderDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -45,7 +45,6 @@
 
                 <div class="container-fluid">
                     <div class=" align-items-center">
-
 
                         <!-- dashboard -->
                         <div class="dashboard-sale cus-dashboard">
@@ -94,8 +93,7 @@
                                                 <label for="">Address</label>
                                             </div>
                                             <div class="col-9">
-                                                <!--<input type="text" id="phone" value="" disabled="">-->
-                                                <textarea class="form-control" id="" rows="2" name="" value="${sale.address}" disabled="">${sale.address}</textarea>
+                                                <textarea class="form-control textarea-custom" id="" rows="2" name="" value="${sale.address}" disabled="">${sale.address}</textarea>
                                             </div>
                                         </div>
                                     </form>
@@ -131,11 +129,11 @@
                                         <div class="col-9 col-9-order">
                                             <form action="MainController" method="get">
                                                 <button onMouseOver="this.style.color = '#1B9C85'" class="link" type="submit" name="action" value="manageSaleOrders">Orders</button>
-                                                <input type="hidden" name="saleid" value="${sessionScope.sale.userID}"/>
                                             </form>
                                         </div>
                                     </div>
-
+                                    Total Orders: <c:out value="${OrderDAO.countSaleOrders(sessionScope.sale.userID)}"/>
+                                    
                                 </div> 
                             </div>
                         </div>

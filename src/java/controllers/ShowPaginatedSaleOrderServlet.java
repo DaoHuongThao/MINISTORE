@@ -1,10 +1,9 @@
-package controllers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package controllers;
 
 import dao.OrderDAO;
 import dto.Order;
@@ -24,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Admin
  */
-public class ManageSaleOrdersServlet extends HttpServlet {
+public class ShowPaginatedSaleOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,13 +41,23 @@ public class ManageSaleOrdersServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             User sale = (User) session.getAttribute("sale");
-            ArrayList<Order> list = OrderDAO.getOrderBySaleId(sale.getUserID());
+            int pageNumber = Integer.parseInt(request.getParameter("page"));
+            int ordersPerPage = 6;
             int totalSaleOrders = OrderDAO.countSaleOrders(sale.getUserID());
-            if(list != null){
-                request.setAttribute("orderList", list);
-                request.setAttribute("totalSaleOrders", totalSaleOrders);
-                request.getRequestDispatcher("viewSaleOrders.jsp").forward(request, response);
+            String status = request.getParameter("status");
+            ArrayList<Order> oList = null;
+            if(status == ""){
+                oList = OrderDAO.getOrderBySaleId(sale.getUserID());
+            }else{
+                oList = OrderDAO.getSaleOrdersByStatus(sale.getUserID(), Integer.parseInt(status));
             }
+            ArrayList<Order> opList = OrderDAO.getPaginatedOrders(pageNumber, ordersPerPage, oList);
+            request.setAttribute("orderList", oList);
+            request.setAttribute("page", pageNumber);
+            request.setAttribute("orderList", opList);
+            request.setAttribute("totalSaleOrders", totalSaleOrders);
+            request.setAttribute("status", status);
+            request.getRequestDispatcher("viewSaleOrders.jsp").forward(request, response);
         }
     }
 
@@ -67,7 +76,7 @@ public class ManageSaleOrdersServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ManageSaleOrdersServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ShowPaginatedSaleOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -85,7 +94,7 @@ public class ManageSaleOrdersServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(ManageSaleOrdersServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ShowPaginatedSaleOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

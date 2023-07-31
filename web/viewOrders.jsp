@@ -108,17 +108,14 @@
                         <div class="mt-4 row group-form">
                             <div class="col">
                                 <form class="search text-center d-flex align-items-center" action="MainController" metohd="post">
-                                    <input name="keyword" type="text" placeholder="Search..." value="${param.keyword == null ? '' : param.keyword}">
-                                    <button id="search-button" type="submit" name="action" value="getSearchedProduct" class="btn">
+                                    <input name="txtsearch" type="text" placeholder="Search (by customer's ID)" value="${param.txtsearch == null ? '' : param.txtsearch}">
+                                    <button id="search-button" type="submit" name="action" value="searchByCustomerID" class="btn">
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </form>
                             </div>
-
-                        </div>   
-
+                        </div>                                    
                         <div class="mt-4 my-2 myOrder-menu viewOrder d-flex">
-
                         </div>
                         <c:choose>
                             <c:when test="${requestScope.orderList.isEmpty()}">
@@ -140,31 +137,60 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="order" items="${requestScope.orderList}">
-                                        <form action="MainController" action="post">
-                                            <tr>
-                                                <td>${order.orderID}</td>
-                                                <td>${order.customerID}</td>
-                                                <td>${order.customerName}</td>
-                                                <td>${order.phone}</td>
-                                                <td>${order.orderDate}</td>
-                                                <td>$${order.totalMoney}</td>
-                                                <td>${order.salesID}</td>
+                                        <c:if test="${requestScope.oList == null}">
+                                            <c:forEach var="order" items="${requestScope.orderList}" begin="0" end="7">
+                                            <form action="MainController" action="post">
+                                                <tr>
+                                                    <td>${order.orderID}</td>
+                                                    <td>${order.customerID}</td>
+                                                    <td>${order.customerName}</td>
+                                                    <td>${order.phone}</td>
+                                                    <td>${order.orderDate}</td>
+                                                    <td>$${order.totalMoney}</td>
+                                                    <td>${order.salesID}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${order.status eq 1}"><span class="status_btn status_processing">Processing</span></c:when>
+                                                            <c:when test="${order.status eq 2}"><span  class="status_btn status_delivering">Delivering</span></c:when>
+                                                            <c:when test="${order.status eq 3}"><span  class="status_btn status_completed">Completed</span></c:when>
+                                                            <c:when test="${order.status eq 4}"><span class="status_btn status_cancel">Canceled</span></c:when>
+                                                        </c:choose>
+                                                    </td>   
+                                                <input type="hidden" name="orderID" value="${order.orderID}"/>
                                                 <td>
-                                                    <c:choose>
-                                                        <c:when test="${order.status eq 1}"><span class="status_btn status_processing">Processing</span></c:when>
-                                                        <c:when test="${order.status eq 2}"><span  class="status_btn status_delivering">Delivering</span></c:when>
-                                                        <c:when test="${order.status eq 3}"><span  class="status_btn status_completed">Completed</span></c:when>
-                                                        <c:when test="${order.status eq 4}"><span class="status_btn status_cancel">Canceled</span></c:when>
-                                                    </c:choose>
-                                                </td>   
-                                            <input type="hidden" name="orderID" value="${order.orderID}"/>
-                                            <td>
-                                                <button type="submit" name="action" value="viewOrderDetailsPage"><i class="update fa-solid fa-pen-to-square mx-2 "></i></button>
-                                            </td>
-                                            </tr>
-                                        </form>
-                                    </c:forEach>
+                                                    <button type="submit" name="action" value="viewOrderDetailsPage"><i class="update fa-solid fa-pen-to-square mx-2 "></i></button>
+                                                </td>
+                                                </tr>
+                                            </form>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="${requestScope.oList != null}">
+                                        <c:forEach var="order" items="${requestScope.oList}">
+                                            <form action="MainController" action="post">
+                                                <tr>
+                                                    <td>${order.orderID}</td>
+                                                    <td>${order.customerID}</td>
+                                                    <td>${order.customerName}</td>
+                                                    <td>${order.phone}</td>
+                                                    <td>${order.orderDate}</td>
+                                                    <td>$${order.totalMoney}</td>
+                                                    <td>${order.salesID}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${order.status eq 1}"><span class="status_btn status_processing">Processing</span></c:when>
+                                                            <c:when test="${order.status eq 2}"><span  class="status_btn status_delivering">Delivering</span></c:when>
+                                                            <c:when test="${order.status eq 3}"><span  class="status_btn status_completed">Completed</span></c:when>
+                                                            <c:when test="${order.status eq 4}"><span class="status_btn status_cancel">Canceled</span></c:when>
+                                                        </c:choose>
+                                                    </td>   
+                                                <input type="hidden" name="orderID" value="${order.orderID}"/>
+                                                <td>
+                                                    <button type="submit" name="action" value="viewOrderDetailsPage"><i class="update fa-solid fa-pen-to-square mx-2 "></i></button>
+                                                </td>
+                                                </tr>
+                                            </form>
+                                        </c:forEach>
+                                    </c:if>
                                     </tbody>
                                 </table>
                                 <nav aria-label="Page navigation example" style="margin: 10px 0;">
@@ -186,7 +212,7 @@
 
                                         <c:set var="orderList" value="${requestScope.orderList}"/>
                                         <c:set var="totalOrder" value="${orderList.size()}"/>
-                                        <c:set var="numOfSearchPages" value="${Math.ceil(totalOrder / 6)}"/>
+                                        <c:set var="numOfSearchPages" value="${Math.ceil(totalOrder / 8)}"/>
                                         <fmt:formatNumber value="${numOfSearchPages}" pattern="0" var="intLastPage" />
 
                                         <c:forEach var="i" begin="1" end="${numOfSearchPages}">

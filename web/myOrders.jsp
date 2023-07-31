@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,18 +57,15 @@
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrders">All</a>
                                         </li>
-
                                         <li class="btn active">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=1">Processing</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=2">Delivering</a>
                                         </li>
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=3">Completed</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=4">Canceled</a>
                                         </li>
@@ -76,19 +74,15 @@
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrders">All</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=1">Processing</a>
                                         </li>
-
                                         <li class="btn active">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=2">Delivering</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=3">Completed</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=4">Canceled</a>
                                         </li>
@@ -97,19 +91,15 @@
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrders">All</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=1">Processing</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=2">Delivering</a>
                                         </li>
-
                                         <li class="btn active">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=3">Completed</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=4">Canceled</a>
                                         </li>
@@ -118,19 +108,15 @@
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrders">All</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=1">Processing</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=2">Delivering</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=3">Completed</a>
                                         </li>
-
                                         <li class="btn active">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=4">Canceled</a>
                                         </li>
@@ -139,35 +125,30 @@
                                         <li class="btn active">
                                             <a href="MainController?action=viewMyOrders">All</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=1">Processing</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=2">Delivering</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=3">Completed</a>
                                         </li>
-
                                         <li class="btn">
                                             <a href="MainController?action=viewMyOrdersByStatus&status=4">Canceled</a>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
-
                             </ul>
                         </div>
 
 
 
                         <!-- table -->
-                        <div class="dashboard myOrder-dashboard">
+                        <div class="dashboard myOrder-dashboard ">
                             <c:choose>
                                 <c:when test="${requestScope.ordersList != null}">
-                                    <table class="table table-order  text-center">
+                                    <table class="table table-order  text-center table-hover">
                                         <thead>
                                             <tr>
                                                 <th class="text-center" scope="col">ID</th>
@@ -181,35 +162,67 @@
                                         </thead>
 
                                         <tbody>
-                                            <c:forEach var="order" items="${requestScope.ordersList}">
-                                                <tr>
-                                                    <td scope="row" class="fw-bold">${order.orderID}</td>
-                                                    <td>${order.customerName}</td>
-                                                    <td>${order.phone}</td>
-                                                    <td>${order.address}</td>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${order.status eq 2}">
-                                                                <span  class="status_btn status_delivering">Delivering</span> 
-                                                            </c:when>
-                                                            <c:when test="${order.status eq 3}">
-                                                                <span  class="status_btn status_completed">Completed</span>
-                                                            </c:when>
-                                                            <c:when test="${order.status eq 4}">
-                                                                <span class="status_btn status_cancel">Canceled</span>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <span class="status_btn status_processing">Processing</span>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </td>
-                                                    <td>$${order.totalMoney}</td>
-                                                    <td><a href="MainController?action=viewOrderInformation&orderID=${order.orderID}" >Order Details</a></td>
-                                                </tr>
-                                            </c:forEach>
+                                            <c:if test="${requestScope.opList == null}">
+                                                <c:forEach var="order" items="${requestScope.ordersList}" begin="0" end="7">
+                                                    <tr>
+                                                        <td scope="row" class="fw-bold">${order.orderID}</td>
+                                                        <td>${order.customerName}</td>
+                                                        <td>${order.phone}</td>
+                                                        <td>${order.address}</td>
+                                                        <td>
+                                                            <c:choose>
+                                                                <c:when test="${order.status eq 2}">
+                                                                    <span  class="status_btn status_delivering">Delivering</span> 
+                                                                </c:when>
+                                                                <c:when test="${order.status eq 3}">
+                                                                    <span  class="status_btn status_completed">Completed</span>
+                                                                </c:when>
+                                                                <c:when test="${order.status eq 4}">
+                                                                    <span class="status_btn status_cancel">Canceled</span>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <span class="status_btn status_processing">Processing</span>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
+                                                        <td>$${order.totalMoney}</td>
+                                                        <td><a href="MainController?action=viewOrderInformation&orderID=${order.orderID}" >Order Details</a></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${requestScope.opList != null}">
+                                                <c:forEach var="order" items="${requestScope.opList}">
+                                                    <tr>
+                                                        <td scope="row" class="fw-bold">${order.orderID}</td>
+                                                        <td>${order.customerName}</td>
+                                                        <td>${order.phone}</td>
+                                                        <td>${order.address}</td>
+                                                        <td>
+                                                            <c:choose>
+                                                                <c:when test="${order.status eq 2}">
+                                                                    <span  class="status_btn status_delivering">Delivering</span> 
+                                                                </c:when>
+                                                                <c:when test="${order.status eq 3}">
+                                                                    <span  class="status_btn status_completed">Completed</span>
+                                                                </c:when>
+                                                                <c:when test="${order.status eq 4}">
+                                                                    <span class="status_btn status_cancel">Canceled</span>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <span class="status_btn status_processing">Processing</span>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
+                                                        <td>$${order.totalMoney}</td>
+                                                        <td><a href="MainController?action=viewOrderInformation&orderID=${order.orderID}" >Order Details</a></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </c:if>
+
                                         </tbody>
+
                                     </table>
-                                    
+
                                 </c:when>
                                 <c:otherwise>
                                     <c:if test="${requestScope.noti != null}">
@@ -219,7 +232,64 @@
                                     </c:if>
                                 </c:otherwise>
                             </c:choose>
+                            <c:if test="${requestScope.ordersList != null}">
+                                <nav aria-label="Page navigation example" style="margin: 10px 0;">
+                                    <ul class="pagination justify-content-center">
+                                        <c:if test="${requestScope.page == 1  || requestScope.page== null}">
+                                            <li class="page-item">
+                                                <a class="page-link" style="padding: 5px 10px !important;color: #1B9C85" href="MainController?action=showMyOrdersPage&page=1&status=${status}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                        </c:if>
+                                        <c:if test="${requestScope.page > 1}">
+                                            <li class="page-item">
+                                                <a class="page-link" style="padding: 5px 10px !important;color: #1B9C85" href="MainController?action=showMyOrdersPage&page=${requestScope.page-1}&status=${status}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                        </c:if>
 
+                                        <c:set var="orderList" value="${requestScope.ordersList}"/>
+                                        <c:set var="totalOrder" value="${orderList.size()}"/>
+                                        <c:set var="numOfPages" value="${Math.ceil(totalOrder / 8)}"/>
+                                        <c:set var="status" value = "${requestScope.status}"/>
+                                        <fmt:formatNumber value="${numOfPages}" pattern="0" var="intLastPage" />
+
+                                        <c:forEach var="i" begin="1" end="${numOfPages}">
+                                            <li class="page-item "><a class="page-link " style="padding:5px 10px !important;color: #1B9C85" 
+                                                                      href="MainController?action=showMyOrdersPage&page=${i}&status=${status}">${i}</a></li>
+                                            </c:forEach>
+                                            <c:choose>
+                                                <c:when test="${intLastPage > 1}">
+                                                    <c:if test="${requestScope.page <  numOfSearchPages || requestScope.page == null}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" style="padding:5px 10px !important;color: #1B9C85" href="MainController?action=showMyOrdersPage&page=${requestScope.page + 1}&status=${status}" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>                          
+                                                <c:if test="${requestScope.page >=  numOfPages}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" style="padding:5px 10px !important;color: #1B9C85" href="MainController?action=showMyOrdersPage&page=${intLastPage}&status=${status}" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if> 
+                                            </c:when>
+                                            <c:when test="${intLastPage <= 1}">
+                                                <c:if test="${requestScope.page == 1 || requestScope.page ==null}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" style="padding:5px 10px !important;color: #1B9C85" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                </c:if>
+                                            </c:when>
+                                        </c:choose>                            
+                                    </ul>
+                                </nav>
+                            </c:if>
 
 
                             <div class="container mt-3 dashboard-footer">

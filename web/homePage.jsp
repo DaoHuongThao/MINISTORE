@@ -52,7 +52,7 @@
             <div class="header">
                 <nav>
                     <ul>
-                        
+
                         <li>
                             <a href="homePage.jsp">Home</a>
                         </li>
@@ -94,16 +94,15 @@
                     <source src="./image/mixkit-surface-covered-with-many-fruits-and-vegetables-seen-in-detail-10433-medium.mp4" type="video/mp4" />
                 </video>
                 <div class="overlay"></div>
-                
+
                 <div class="banner-title text-center d-flex align-items-center">
-                    
+
                     <h1>Ministore </br>
                         Shop <em>Everything!</em>
                     </h1>
                 </div>
 
                 <form class="banner-search text-center d-flex align-items-center" action="MainController" method="post">
-                    
                     <input type="text" placeholder="Search..." name="keyword">
                     <button id="search-button" type="submit" class="btn" name="action" value="searchProduct" style="width:60px; left:1000px"> 
                         <i class="fas fa-search"></i>
@@ -161,11 +160,6 @@
                                 <li><span id="seconds"></span>Seconds</li>
                             </ul>
                         </div>
-
-
-
-
-
                     </div>
                 </div>
 
@@ -310,7 +304,7 @@
                 </div>
 
                 <div class="item-list mx-5">
-                    <div class="row ">
+                    <div class="row row-cols-md-5">
                         <c:if test="${ProductDAO.getProducts() != null}">
                             <c:if test="${requestScope.list == null}">
                                 <c:forEach var="product" items="${ProductDAO.getProducts()}" begin="0" end="19">
@@ -366,7 +360,7 @@
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center ">
                         <c:if test="${requestScope.page == 1 || requestScope.page == null}">
-                            <li class="page-item">
+                            <li class="page-item previous disabled">
                                 <a class="page-link" style="padding: 8px 14px !important;color: #1B9C85" href="MainController?action=showPage&page=1" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
@@ -408,6 +402,11 @@
         </div>
 
         <form action="MainController" action="post">                
+            <button type="submit" name="action" value="backToHome" class="btn btn-floating btn-lg" id="btn-home-page">
+                <img style="length:33px; height:33px"src="image/favicon-32x32.png" alt="Ministore">
+            </button>
+        </form>
+        <form action="MainController" action="post">                
             <button type="submit" name="action" value="viewCart" class="btn btn-floating btn-lg" id="btn-floating-cart">
                 <i class="fa-solid fa-cart-shopping"></i>
             </button>
@@ -428,7 +427,6 @@
                 integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-        <!-- Init Own Carousel -->
         <!-- Init Own Carousel -->
         <script>
             var owl = $('.owl-carousel');

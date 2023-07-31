@@ -308,6 +308,30 @@
         <servlet-name>GetEmployeeScheduleServlet</servlet-name>
         <servlet-class>controllers.GetEmployeeScheduleServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShowPaginatedOrdersServlet</servlet-name>
+        <servlet-class>controllers.ShowPaginatedOrdersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowPaginatedMyOrdersServlet</servlet-name>
+        <servlet-class>controllers.ShowPaginatedMyOrdersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaleSearchByCustomerIDServlet</servlet-name>
+        <servlet-class>controllers.SaleSearchByCustomerIDServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowPaginatedSaleOrderServlet</servlet-name>
+        <servlet-class>controllers.ShowPaginatedSaleOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewSaleOrdersByStatusServlet</servlet-name>
+        <servlet-class>controllers.ViewSaleOrdersByStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchByCustomerIDServlet</servlet-name>
+        <servlet-class>controllers.SearchByCustomerIDServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ResetPassServlet</servlet-name>
         <url-pattern>/ResetPassServlet</url-pattern>
@@ -608,6 +632,30 @@
         <servlet-name>GetEmployeeScheduleServlet</servlet-name>
         <url-pattern>/GetEmployeeScheduleServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowPaginatedOrdersServlet</servlet-name>
+        <url-pattern>/ShowPaginatedOrdersServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowPaginatedMyOrdersServlet</servlet-name>
+        <url-pattern>/ShowPaginatedMyOrdersServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaleSearchByCustomerIDServlet</servlet-name>
+        <url-pattern>/SaleSearchByCustomerIDServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowPaginatedSaleOrderServlet</servlet-name>
+        <url-pattern>/ShowPaginatedSaleOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewSaleOrdersByStatusServlet</servlet-name>
+        <url-pattern>/ViewSaleOrdersByStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchByCustomerIDServlet</servlet-name>
+        <url-pattern>/SearchByCustomerIDServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -616,5 +664,4 @@
     <welcome-file-list>
         <welcome-file>homePage.jsp</welcome-file>
     </welcome-file-list>
-    
 </web-app>

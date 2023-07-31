@@ -40,10 +40,6 @@
 
         <div class="container-fluid">
 
-            <!-- menu -->
-
-
-
             <!-- table -->
             <div class="dashboard schedule mt-4">
 
@@ -55,69 +51,69 @@
 
                         <!-- info -->
                         <div class="col-lg-5 order-info">
-                            <form action="">
-                                <div class="form-item my-4 d-flex align-items-center justify-content-center">
-                                    <div class="col-3">
-                                        <label for="">Name</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <input type="text" id="name" disabled="" value="${requestScope.order.customerName}">
-                                    </div>
+                            <div class="form-item my-4 d-flex align-items-center justify-content-center">
+                                <div class="col-3">
+                                    <label for="">Name</label>
                                 </div>
-
-                                <div class="form-item my-4 d-flex align-items-center justify-content-center">
-                                    <div class="col-3">
-                                        <label for="">Order Date</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <input type="datetime" id="orderDate" disabled="" value="${requestScope.order.orderDate}">
-                                    </div>
+                                <div class="col-9">
+                                    <input type="text" id="name" disabled="" value="${requestScope.order.customerName}">
                                 </div>
+                            </div>
 
-                                <div class="form-item my-4 d-flex align-items-center justify-content-center">
-                                    <div class="col-3">
-                                        <label for="">Ship Date</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <input type="datetime" id="shipDate" disabled="" value="${requestScope.order.shipDate}">
-                                    </div>
+                            <div class="form-item my-4 d-flex align-items-center justify-content-center">
+                                <div class="col-3">
+                                    <label for="">Order Date</label>
                                 </div>
-
-                                <div class="form-item my-4 d-flex align-items-center justify-content-center">
-                                    <div class="col-3">
-                                        <label for="">Phone</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <input type="tel" id="phone" disabled="" value="${requestScope.order.phone}">
-                                    </div>
+                                <div class="col-9">
+                                    <input type="datetime" id="orderDate" disabled="" value="${requestScope.order.orderDate}">
                                 </div>
+                            </div>
 
-                                <div class="form-item my-4 d-flex align-items-center justify-content-center">
-                                    <div class="col-3">
-                                        <label for="">Address</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <input type="text" id="address" disabled="" value="${requestScope.order.address}">
-                                    </div>
+                            <div class="form-item my-4 d-flex align-items-center justify-content-center">
+                                <div class="col-3">
+                                    <label for="">Ship Date</label>
                                 </div>
-
-                                <div class="form-item my-4 d-flex align-items-center justify-content-center">
-                                    <div class="col-3">
-                                        <label for="">Voucher</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <c:choose>
-                                            <c:when test="${requestScope.voucher.discount != null}">
-                                                <input type="text" id="voucher" disabled="" value="-$${requestScope.voucher.discount}">
-                                            </c:when>
-                                            <c:otherwise>
-                                                <input type="text" id="voucher" disabled="" value="">
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
+                                <div class="col-9">
+                                    <input type="datetime" id="shipDate" disabled="" value="${requestScope.order.shipDate}">
                                 </div>
+                            </div>
 
-                                <div class="  status-orderDetail d-flex justify-content-between mt-5">
+                            <div class="form-item my-4 d-flex align-items-center justify-content-center">
+                                <div class="col-3">
+                                    <label for="">Phone</label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="tel" id="phone" disabled="" value="${requestScope.order.phone}">
+                                </div>
+                            </div>
+
+                            <div class="form-item my-4 d-flex align-items-center justify-content-center">
+                                <div class="col-3">
+                                    <label for="">Address</label>
+                                </div>
+                                <div class="col-9">
+                                    <input type="text" id="address" disabled="" value="${requestScope.order.address}">
+                                </div>
+                            </div>
+
+                            <div class="form-item my-4 d-flex align-items-center justify-content-center">
+                                <div class="col-3">
+                                    <label for="">Voucher</label>
+                                </div>
+                                <div class="col-9">
+                                    <c:choose>
+                                        <c:when test="${requestScope.voucher.discount != null}">
+                                            <input type="text" id="voucher" disabled="" value="-$${requestScope.voucher.discount}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="text" id="voucher" disabled="" value="">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+
+                            <form action="MainController" method="post" >
+                                <div class="status-orderDetail d-flex justify-content-center mt-5 mb-3">
                                     <div class="col-3">
                                         <label for="">Status</label>
                                     </div>
@@ -125,7 +121,7 @@
                                     <div class="col-9">
                                         <form action="MainController" method="post" class="d-flex">
                                             <select class="form-select" aria-label="Default select example" name="status">
-                                                <option selected>
+                                                <option selected disabled="">
                                                     <c:choose>
                                                         <c:when test="${requestScope.order.status eq 2}">
                                                             Delivering
@@ -189,14 +185,18 @@
                                                 </c:choose>
 
                                             </select>
-                                            <input type="hidden" name="orderid" value="${order.orderID}" readonly="">
-                                            <input type="hidden" name="saleid" value="${sessionScope.sale.userID}"/>
                                             <div class="mt-4 d-flex justify-content-start">
-                                                <button class="button apply mx-2" type="submit" name="action" value="saleChangeOrderStatus">Update</button>
                                             </div>
-                                        </form>
                                     </div>
                                 </div>
+                                <div class="form-item d-flex align-items-center justify-content-center mb-4">
+                                    <input type="hidden" name="orderid" value="${order.orderID}" readonly="">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <input type="hidden" name="saleid" value="${sessionScope.sale.userID}"/>
+                                        <button class="button apply mx-2" type="submit" name="action" value="saleChangeOrderStatus">Update</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
                         <!-- check out -->

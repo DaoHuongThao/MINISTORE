@@ -4,9 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/JavaWeb/MINISTORE/web/viewCart.jsp</file>
-            <file>file:/D:/JavaWeb/MINISTORE/web/myOrders.jsp</file>
-            <file>file:/D:/JavaWeb/MINISTORE/web/cartConfirmation.jsp</file>
-            <file>file:/D:/JavaWeb/MINISTORE/src/java/controllers/ConfirmCartServlet.java</file>
+            <file>file:/D:/JavaWeb/MINISTORE/web/header.jsp</file>
+            <file>file:/D:/JavaWeb/MINISTORE/src/java/dao/UserDAO.java</file>
+            <file>file:/D:/JavaWeb/MINISTORE/web/header_cart.jsp</file>
+            <file>file:/D:/JavaWeb/MINISTORE/web/viewMySchedule.jsp</file>
+            <file>file:/D:/JavaWeb/MINISTORE/web/managerDashboard.jsp</file>
+            <file>file:/D:/JavaWeb/MINISTORE/src/java/dao/ProductDAO.java</file>
             <file>file:/D:/JavaWeb/MINISTORE/src/java/dao/OrderDAO.java</file>
         </group>
     </open-files>

@@ -186,6 +186,18 @@ public class MainController extends HttpServlet {
                 url = "SaleChangeOrderStatusServlet";
             } else if (action.equalsIgnoreCase("getEmployeeSchedule")) {
                 url = "GetEmployeeScheduleServlet";
+            } else if (action.equalsIgnoreCase("searchByCustomerID")) {
+                url = "SearchByCustomerIDServlet";
+            } else if (action.equalsIgnoreCase("showOrdersPage")) {
+                url = "ShowPaginatedOrdersServlet";
+            } else if (action.equalsIgnoreCase("showMyOrdersPage")) {
+                url = "ShowPaginatedMyOrdersServlet";
+            } else if (action.equalsIgnoreCase("showSaleOrdersPage")) {
+                url = "ShowPaginatedSaleOrderServlet";
+            } else if (action.equalsIgnoreCase("viewSaleOrdersByStatus")) {
+                url = "ViewSaleOrdersByStatusServlet";
+            } else if (action.equalsIgnoreCase("saleSearchByCustomerID")) {
+                url = "SaleSearchByCustomerIDServlet";
             }
             
 

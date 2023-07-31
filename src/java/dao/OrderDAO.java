@@ -35,11 +35,21 @@ public class OrderDAO {
                 String salesID = "", orderID = "";
                 cn.setAutoCommit(false); //turn off auto-commit
                 //get random salesID
-                String sql = "SELECT TOP 1 UserID FROM USERS WHERE RoleID=1 and status=1 ORDER BY NEWID()";
+                String sql = "SELECT TOP 1 EmployeeID\n"
+                        + "FROM SCHEDULES inner join USERS on SCHEDULES.EmployeeID = USERS.UserID \n"
+                        + "where RoleID = 1 and Status = 1 and CONVERT(date, GETDATE()) = SCHEDULES.ScheduleDate\n"
+                        + "and  WorksheetID = \n"
+                        + "CASE \n"
+                        + "	WHEN 18 <= DATEPART(hour, CONVERT(time, GETDATE())) and DATEPART(hour, CONVERT(time, GETDATE())) <= 24 THEN 'WS-0003'\n"
+                        + "	WHEN 12 <= DATEPART(hour, CONVERT(time, GETDATE())) and DATEPART(hour, CONVERT(time, GETDATE())) < 18  THEN 'WS-0002'\n"
+                        + "	WHEN 6 <= DATEPART(hour, CONVERT(time, GETDATE())) and DATEPART(hour, CONVERT(time, GETDATE())) < 12  THEN 'WS-0001' \n"
+                        + "	 ELSE ''\n"
+                        + "        END\n"
+                        + "ORDER BY NEWID()";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null && rs.next()) {
-                    salesID = rs.getString("UserID");
+                    salesID = rs.getString("EmployeeID");
                 }
 
                 //insert new order into Orders
@@ -178,6 +188,58 @@ public class OrderDAO {
                 String sql = "select OrderID,CustomerName,Phone,Address,PostalCode,"
                         + "TotalMoney,Status,OrderDate,ShipDate,CustomerID,SalesID,VoucherID\n"
                         + "from ORDERS where CustomerID=? and Status=? order by OrderID desc";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setString(1, userID);
+                pst.setInt(2, status);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        String orderID = rs.getString("OrderID");
+                        String customerName = rs.getString("CustomerName");
+                        String phone = rs.getString("Phone");
+                        String address = rs.getString("Address");
+                        String postalCode = rs.getString("PostalCode");
+                        float totalMoney = rs.getFloat("TotalMoney");
+                        int orderStatus = rs.getInt("Status");
+                        Timestamp orderDate = rs.getTimestamp("OrderDate");
+                        Timestamp shipdate = rs.getTimestamp("ShipDate");
+//                        if (rs.wasNull()) {
+//                            shipDate = "N/A";
+//                        } else {
+//                            shipDate = shipdate.toString();
+//                        }
+                        String customerID = rs.getString("CustomerID");
+                        String salesID = rs.getString("SalesID");
+                        String voucherID = rs.getString("VoucherID");
+                        Order order = new Order(orderID, customerName, phone, address, postalCode,
+                                totalMoney, status, orderDate, shipdate, customerID, salesID, voucherID);
+                        list.add(order);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return list;
+    }
+
+    public static ArrayList<Order> getSaleOrdersByStatus(String userID, int status) {
+        Connection cn = null;
+        ArrayList<Order> list = new ArrayList<>();
+        try {
+            cn = DBUtils.makeConnection();
+            if (cn != null) {
+                String sql = "select OrderID,CustomerName,Phone,Address,PostalCode,"
+                        + "TotalMoney,Status,OrderDate,ShipDate,CustomerID,SalesID,VoucherID\n"
+                        + "from ORDERS where SalesID=? and Status=? order by OrderID desc";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setString(1, userID);
                 pst.setInt(2, status);
@@ -377,6 +439,20 @@ public class OrderDAO {
         return list;
     }
 
+    public static ArrayList<Order> getPaginatedOrders(int pageNumber, int ordersPerPage, ArrayList<Order> orderList) throws Exception {
+        ArrayList<Order> pList = new ArrayList<>();
+        Connection cn = DBUtils.makeConnection();
+        int start = (pageNumber - 1) * ordersPerPage;
+        int end = start + ordersPerPage - 1;
+        if (end > orderList.size() || end == orderList.size()) {
+            end = orderList.size() - 1;
+        }
+        for (int i = start; i <= end; i++) {
+            pList.add(orderList.get(i));
+        }
+        return pList;
+    }
+
     public static ArrayList<Order> getOrders() throws Exception {
         ArrayList<Order> list = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
@@ -403,18 +479,77 @@ public class OrderDAO {
         return list;
     }
 
-    public static ArrayList<Order> getPaginatedOrders(int pageNumber, int ordersPerPage, ArrayList<Order> orderList) throws Exception {
-        ArrayList<Order> pList = new ArrayList<>();
+    public static ArrayList<Order> getSearchedOrdersByID(String cusid) throws Exception {
+        ArrayList<Order> list = new ArrayList<>();
         Connection cn = DBUtils.makeConnection();
-        int start = (pageNumber - 1) * ordersPerPage;
-        int end = start + ordersPerPage - 1;
-        if (end > orderList.size() || end == orderList.size()) {
-            end = orderList.size() - 1;
+        if (cn != null) {
+            String sql = "select OrderID,CustomerID,CustomerName,Phone,OrderDate,TotalMoney,SalesID,Status\n"
+                    + "from ORDERS where CustomerID like ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, "%" + cusid + "%");
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    String orderID = table.getString("OrderID");
+                    String customerID = table.getString("CustomerID");
+                    String customerName = table.getString("CustomerName");
+                    String phone = table.getString("Phone");
+                    Timestamp orderDate = table.getTimestamp("OrderDate");
+                    float totalMoney = table.getFloat("TotalMoney");
+                    String salesID = table.getString("SalesID");
+                    int status = table.getInt("status");
+                    Order order = new Order(orderID, customerID, customerName, phone, orderDate, totalMoney, salesID, status);
+                    list.add(order);
+                }
+            }
+            cn.close();
         }
-        for (int i = start; i <= end; i++) {
-            pList.add(orderList.get(i));
+        return list;
+    }
+    
+    public static ArrayList<Order> saleGetSearchedOrdersByID(String cusid, String saleID) throws Exception {
+        ArrayList<Order> list = new ArrayList<>();
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "select OrderID,CustomerID,CustomerName,Phone,OrderDate,TotalMoney,SalesID,Status\n"
+                    + "from ORDERS where CustomerID LIKE ? AND SalesID = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, "%" + cusid + "%");
+            pst.setString(2, saleID);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    String orderID = table.getString("OrderID");
+                    String customerID = table.getString("CustomerID");
+                    String customerName = table.getString("CustomerName");
+                    String phone = table.getString("Phone");
+                    Timestamp orderDate = table.getTimestamp("OrderDate");
+                    float totalMoney = table.getFloat("TotalMoney");
+                    String salesID = table.getString("SalesID");
+                    int status = table.getInt("status");
+                    Order order = new Order(orderID, customerID, customerName, phone, orderDate, totalMoney, salesID, status);
+                    list.add(order);
+                }
+            }
+            cn.close();
         }
-        return pList;
+        return list;
+    }
+    
+    public static int countSaleOrders(String id) throws Exception{
+    int total = 0;
+        Connection cn = DBUtils.makeConnection();
+        if (cn != null) {
+            String sql = "Select COUNT(*) from ORDERS where SalesID = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table.next()) {
+                total = table.getInt(1);
+            }
+            cn.close();
+        }
+        return total;
     }
 
     public static int countOrdersByStatus(int status) throws Exception {
@@ -476,14 +611,15 @@ public class OrderDAO {
         return count;
     }
     
-    public static float calculateRevenue() throws Exception {
+    public static float calculateRevenue(int status) throws Exception {
         float sum = 0;
         Connection cn = null;
         try {
             cn = DBUtils.makeConnection();
             if (cn != null) {
-                String s = "select SUM(TotalMoney) as Total from ORDERS";
+                String s = "select SUM(case when Status=? then TotalMoney else 0 end) as Total from ORDERS";
                 PreparedStatement pst = cn.prepareStatement(s);
+                pst.setInt(1, status);
                 ResultSet table = pst.executeQuery();
                 if (table != null) {
                     while (table.next()) {

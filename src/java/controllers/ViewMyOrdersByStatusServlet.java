@@ -45,6 +45,7 @@ public class ViewMyOrdersByStatusServlet extends HttpServlet {
                 request.getRequestDispatcher("myOrders.jsp").forward(request, response);
             } else {
                 request.setAttribute("ordersList", ordersList);
+                request.setAttribute("status", status);
                 request.getRequestDispatcher("myOrders.jsp").forward(request, response);
             }
         }

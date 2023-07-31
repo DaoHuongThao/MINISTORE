@@ -1,30 +1,25 @@
-package controllers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package controllers;
 
 import dao.OrderDAO;
 import dto.Order;
-import dto.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Admin
+ * @author Asus TUF
  */
-public class ManageSaleOrdersServlet extends HttpServlet {
+public class SearchByCustomerIDServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,19 +31,20 @@ public class ManageSaleOrdersServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            User sale = (User) session.getAttribute("sale");
-            ArrayList<Order> list = OrderDAO.getOrderBySaleId(sale.getUserID());
-            int totalSaleOrders = OrderDAO.countSaleOrders(sale.getUserID());
-            if(list != null){
+            String cusid = request.getParameter("txtsearch");
+            if (!cusid.equals("") || !cusid.isEmpty()) {
+                ArrayList<Order> list = OrderDAO.getSearchedOrdersByID(cusid);
                 request.setAttribute("orderList", list);
-                request.setAttribute("totalSaleOrders", totalSaleOrders);
-                request.getRequestDispatcher("viewSaleOrders.jsp").forward(request, response);
+                request.getRequestDispatcher("viewOrders.jsp").forward(request, response);
+            } else {
+                ArrayList<Order> list = null;
+                request.setAttribute("orderList", list);
+                request.getRequestDispatcher("viewOrders.jsp").forward(request, response);
             }
+        }catch(Exception e){
         }
     }
 
@@ -64,11 +60,7 @@ public class ManageSaleOrdersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(ManageSaleOrdersServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -82,11 +74,7 @@ public class ManageSaleOrdersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(ManageSaleOrdersServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
