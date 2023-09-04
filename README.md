@@ -21,3 +21,7 @@
    - Microsoft SQL Server
    - Tomcat Server 9
    - Additional jar files: sqljdbc.jar/activation.jar/mail.jar
+
+# 3. Data
+   - Run MINISTORE.sql to create database
+   - Run AddingData_Query.sql to add data to database
